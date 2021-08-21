@@ -1,22 +1,28 @@
-package com.adasoranina.aplikasirest.model.domain;
+package com.adasoranina.aplikasirest.model.response;
 
 import com.adasoranina.aplikasirest.utils.FormatOutput;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.Objects;
+public class EmployeeResponse {
 
-public class Employee {
-
+    @SerializedName(value="id")
     private Integer id;
+
+    @SerializedName(value="name")
     private String name;
+
+    @SerializedName(value="position")
     private String position;
+
+    @SerializedName(value="salary")
     private Integer salary;
 
-    public Employee(Integer id, String name) {
+    public EmployeeResponse(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Employee(Integer id, String name, String position, Integer salary) {
+    public EmployeeResponse(Integer id, String name, String position, Integer salary) {
         this.id = id;
         this.name = name;
         this.position = position;
@@ -55,17 +61,5 @@ public class Employee {
         this.salary = salary;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id) && Objects.equals(name, employee.name) && Objects.equals(position, employee.position) && Objects.equals(salary, employee.salary);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, position, salary);
-    }
 
 }

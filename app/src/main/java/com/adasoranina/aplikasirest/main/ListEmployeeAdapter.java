@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +16,14 @@ import com.adasoranina.aplikasirest.model.domain.Employee;
 
 public class ListEmployeeAdapter extends ListAdapter<Employee, ListEmployeeAdapter.EmployeeViewHolder> {
 
-    public ListEmployeeAdapter() {
+    private final ItemClickListener itemClickListener;
+
+    public ListEmployeeAdapter(ItemClickListener itemClickListener) {
         super(new DiffCallback());
+        this.itemClickListener = itemClickListener;
     }
 
-    static class EmployeeViewHolder extends RecyclerView.ViewHolder {
+    class EmployeeViewHolder extends RecyclerView.ViewHolder {
         private final TextView textId;
         private final TextView textName;
 
@@ -32,6 +36,8 @@ public class ListEmployeeAdapter extends ListAdapter<Employee, ListEmployeeAdapt
         public void bind(Employee employee) {
             textId.setText(String.valueOf(employee.getId()));
             textName.setText(employee.getName());
+
+            itemView.setOnClickListener(v -> itemClickListener.onClick(employee.getId()));
         }
 
     }
@@ -60,6 +66,10 @@ public class ListEmployeeAdapter extends ListAdapter<Employee, ListEmployeeAdapt
         public boolean areContentsTheSame(@NonNull Employee oldItem, @NonNull Employee newItem) {
             return oldItem.equals(newItem);
         }
+    }
+
+    public interface ItemClickListener {
+        void onClick(@Nullable Integer id);
     }
 
 }

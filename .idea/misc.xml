@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DATA-DEDA/vsga-jmp-polban/AplikasiREST/app/src/main/res/layout/activity_employee.xml" value="0.25" />
         <entry key="..\:/DATA-DEDA/vsga-jmp-polban/AplikasiREST/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/DATA-DEDA/vsga-jmp-polban/AplikasiREST/app/src/main/res/layout/employee_activity.xml" value="0.20416666666666666" />
         <entry key="..\:/DATA-DEDA/vsga-jmp-polban/AplikasiREST/app/src/main/res/layout/item_employee.xml" value="0.25" />
+        <entry key="..\:/DATA-DEDA/vsga-jmp-polban/AplikasiREST/app/src/main/res/menu/menu_employee.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

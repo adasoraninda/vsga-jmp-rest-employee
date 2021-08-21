@@ -1,6 +1,7 @@
 package com.adasoranina.aplikasirest.mapper;
 
 import com.adasoranina.aplikasirest.model.domain.Employee;
+import com.adasoranina.aplikasirest.model.response.EmployeeResponse;
 import com.adasoranina.aplikasirest.model.response.ListEmployeeResponse;
 
 import java.util.ArrayList;
@@ -18,6 +19,14 @@ public class DataMapper {
         }
 
         return employees;
+    }
+
+    public static Employee toDomain(EmployeeResponse employeeResponse) {
+        return new Employee(
+                employeeResponse.getId(),
+                employeeResponse.getName(),
+                employeeResponse.getPosition(),
+                employeeResponse.getSalary());
     }
 
 }

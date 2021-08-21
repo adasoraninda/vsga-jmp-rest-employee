@@ -11,7 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adasoranina.aplikasirest.R;
+import com.adasoranina.aplikasirest.manipulate.EmployeeActivity;
 import com.adasoranina.aplikasirest.model.domain.Employee;
+import com.adasoranina.aplikasirest.network.EmployeeServiceImpl;
+import com.adasoranina.aplikasirest.utils.SuccessState;
+import com.adasoranina.aplikasirest.utils.ViewState;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +25,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private TextView textError;
     private ProgressBar progressBar;
-    private RecyclerView listEmployee;
     private ListEmployeeAdapter employeeAdapter;
-
-    private MainContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,43 +34,44 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         textError = findViewById(R.id.text_error);
         progressBar = findViewById(R.id.progress_bar);
-        listEmployee = findViewById(R.id.list_employee);
+        FloatingActionButton buttonAddEmployee = findViewById(R.id.button_add);
+        RecyclerView listEmployee = findViewById(R.id.list_employee);
 
-        employeeAdapter = new ListEmployeeAdapter();
-        presenter = new MainPresenter(this);
+        MainContract.Presenter presenter = new MainPresenter(this, new EmployeeServiceImpl());
+
+        employeeAdapter = new ListEmployeeAdapter(id -> EmployeeActivity.navigate(this, id));
 
         listEmployee.setAdapter(employeeAdapter);
         presenter.getAllData();
+
+        buttonAddEmployee.setOnClickListener(v -> EmployeeActivity.navigate(this, null));
     }
 
     @Override
-    public void showLoading() {
-        textError.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
     @SuppressLint("NotifyDataSetChanged")
-    @Override
-    public void getData(List<Employee> employees) {
+    public void viewState(ViewState<List<Employee>> state) {
         textError.setVisibility(View.GONE);
+        progressBar.setVisibility(state.isLoading() ? View.VISIBLE : View.GONE);
 
-        employeeAdapter.submitList(new ArrayList<>());
-        employeeAdapter.submitList(employees);
-        employeeAdapter.notifyDataSetChanged();
+        if (state.getError() != null) {
+            textError.setVisibility(View.VISIBLE);
+            textError.setText(state.getError());
+            return;
+        }
+
+        SuccessState<List<Employee>> successState = state.getSuccessState();
+        if (successState != null) {
+            if (successState.getMessage() != null) {
+                Toast.makeText(this, successState.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            if (!successState.getData().isEmpty()) {
+                employeeAdapter.submitList(new ArrayList<>());
+                employeeAdapter.submitList(successState.getData());
+                employeeAdapter.notifyDataSetChanged();
+            }
+        }
+
     }
 
-    @Override
-    public void dismissLoading() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showError() {
-        textError.setVisibility(View.VISIBLE);
-    }
 }

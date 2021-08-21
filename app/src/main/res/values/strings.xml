@@ -6,4 +6,9 @@
     <string name="label_salary">Gaji</string>
     <string name="dot">:</string>
     <string name="error">Error</string>
+    <string name="add">Tambah</string>
+    <string name="update">Ubah</string>
+    <string name="delete">Hapus</string>
+    <string name="title_update">Ubah Karyawan</string>
+    <string name="title_add">Tambah Karyawan</string>
 </resources>
