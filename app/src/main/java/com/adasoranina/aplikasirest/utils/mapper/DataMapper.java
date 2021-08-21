@@ -1,6 +1,8 @@
-package com.adasoranina.aplikasirest.mapper;
+package com.adasoranina.aplikasirest.utils.mapper;
 
 import com.adasoranina.aplikasirest.model.domain.Employee;
+import com.adasoranina.aplikasirest.model.request.EmployeeAddRequest;
+import com.adasoranina.aplikasirest.model.request.EmployeeUpdateRequest;
 import com.adasoranina.aplikasirest.model.response.EmployeeResponse;
 import com.adasoranina.aplikasirest.model.response.ListEmployeeResponse;
 
@@ -28,5 +30,21 @@ public class DataMapper {
                 employeeResponse.getPosition(),
                 employeeResponse.getSalary());
     }
+
+    public static EmployeeAddRequest toAddRequest(Employee employee) {
+        return new EmployeeAddRequest(
+                employee.getName(),
+                employee.getPosition(),
+                employee.getSalary());
+    }
+
+    public static EmployeeUpdateRequest toUpdateRequest(Employee employee) {
+        return new EmployeeUpdateRequest(
+                employee.getId(),
+                employee.getName(),
+                employee.getPosition(),
+                employee.getSalary());
+    }
+
 
 }

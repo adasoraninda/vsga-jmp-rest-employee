@@ -1,4 +1,4 @@
-package com.adasoranina.aplikasirest.main;
+package com.adasoranina.aplikasirest.ui.main;
 
 import android.view.LayoutInflater;
 import android.view.View;

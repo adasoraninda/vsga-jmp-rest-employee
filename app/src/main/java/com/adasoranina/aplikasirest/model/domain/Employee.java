@@ -16,12 +16,19 @@ public class Employee {
         this.name = name;
     }
 
+    public Employee(String name, String position, Integer salary) {
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+    }
+
     public Employee(Integer id, String name, String position, Integer salary) {
         this.id = id;
         this.name = name;
         this.position = position;
         this.salary = salary;
     }
+
 
     public Integer getId() {
         return id;

@@ -1,9 +1,9 @@
-package com.adasoranina.aplikasirest.manipulate;
+package com.adasoranina.aplikasirest.ui.manipulate;
 
 import androidx.annotation.Nullable;
 
 import com.adasoranina.aplikasirest.model.domain.Employee;
-import com.adasoranina.aplikasirest.utils.ViewState;
+import com.adasoranina.aplikasirest.model.state.ViewState;
 
 public interface EmployeeContract {
 
@@ -18,7 +18,7 @@ public interface EmployeeContract {
 
         void updateEmployee(Integer id, String name, String position, Integer salary);
 
-        void delete(Integer id);
+        void deleteEmployee(Integer id);
     }
 
 }

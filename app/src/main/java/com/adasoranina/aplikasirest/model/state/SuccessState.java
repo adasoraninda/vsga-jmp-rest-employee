@@ -1,4 +1,4 @@
-package com.adasoranina.aplikasirest.utils;
+package com.adasoranina.aplikasirest.model.state;
 
 public class SuccessState<T> {
     private String message;

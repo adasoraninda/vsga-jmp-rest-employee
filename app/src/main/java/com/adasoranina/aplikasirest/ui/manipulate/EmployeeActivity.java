@@ -1,4 +1,4 @@
-package com.adasoranina.aplikasirest.manipulate;
+package com.adasoranina.aplikasirest.ui.manipulate;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,9 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.adasoranina.aplikasirest.R;
 import com.adasoranina.aplikasirest.model.domain.Employee;
+import com.adasoranina.aplikasirest.model.state.SuccessState;
+import com.adasoranina.aplikasirest.model.state.ViewState;
 import com.adasoranina.aplikasirest.network.EmployeeServiceImpl;
-import com.adasoranina.aplikasirest.utils.SuccessState;
-import com.adasoranina.aplikasirest.utils.ViewState;
+import com.adasoranina.aplikasirest.ui.main.MainActivity;
 
 public class EmployeeActivity extends AppCompatActivity implements EmployeeContract.View {
 
@@ -54,14 +55,31 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeContr
         setUpActionBar();
         setUpView();
 
+        int id = getIntent().getIntExtra(KEY_ID, 0);
+
         if (!getMode()) {
-            int id = getIntent().getIntExtra(KEY_ID, 0);
             if (id > 0) {
                 presenter.getEmployee(id);
             }
         }
 
         buttonAddUpdate.setOnClickListener(v -> {
+            String name = inputName.getText().toString().trim();
+            String position = inputPosition.getText().toString().trim();
+            String salary = inputSalary.getText().toString().trim();
+
+            try {
+                if (id > 0) {
+                    presenter.updateEmployee(id, name, position, Integer.parseInt(salary));
+                } else {
+                    presenter.addEmployee(name, position, Integer.parseInt(salary));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                viewState(ViewState.loading(false));
+                Toast.makeText(this, "Gagal input data", Toast.LENGTH_SHORT).show();
+            }
+
         });
     }
 
@@ -79,7 +97,8 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeContr
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         } else if (item.getItemId() == R.id.action_delete) {
-            Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+            int id = getIntent().getIntExtra(KEY_ID, 0);
+            presenter.deleteEmployee(id);
         }
 
         return super.onOptionsItemSelected(item);
@@ -127,6 +146,11 @@ public class EmployeeActivity extends AppCompatActivity implements EmployeeContr
         if (successState != null) {
             if (successState.getMessage() != null) {
                 Toast.makeText(this, successState.getMessage(), Toast.LENGTH_SHORT).show();
+                if (successState.getMessage().contains("Berhasil")) {
+                    MainActivity.navigate(this);
+                    finish();
+                    return;
+                }
             }
 
             if (successState.getData() != null) {

@@ -1,6 +1,8 @@
-package com.adasoranina.aplikasirest.main;
+package com.adasoranina.aplikasirest.ui.main;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -11,11 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adasoranina.aplikasirest.R;
-import com.adasoranina.aplikasirest.manipulate.EmployeeActivity;
+import com.adasoranina.aplikasirest.ui.manipulate.EmployeeActivity;
 import com.adasoranina.aplikasirest.model.domain.Employee;
 import com.adasoranina.aplikasirest.network.EmployeeServiceImpl;
-import com.adasoranina.aplikasirest.utils.SuccessState;
-import com.adasoranina.aplikasirest.utils.ViewState;
+import com.adasoranina.aplikasirest.model.state.SuccessState;
+import com.adasoranina.aplikasirest.model.state.ViewState;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -72,6 +74,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         }
 
+    }
+
+    public static void navigate(Context context){
+        context.startActivity(new Intent(context, MainActivity.class));
     }
 
 }
